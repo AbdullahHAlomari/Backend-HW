@@ -84,19 +84,6 @@ export const getByGenre = async (req:Request, res:Response)=>{
   res.json(movie)
 }
 
-// Get all movies which have more than rating number
-// export const getRatingMovie = async (req:Request, res:Response)=>{
-//   const {rating} = req.body
-//   const ratings = await prisma.movie.findMany({
-//     where: {
-//       rating:{
-//         gte: rating
-//       }
-//     }
-//   })
-//   res.json(ratings)
-// }
-
 export const getRatingMovie = async (req: Request, res: Response) => {
   const { rating } = req.body;
   const ratings = await prisma.movie.findMany({
