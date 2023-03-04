@@ -175,12 +175,12 @@ export const getRoleCount = async(req:Request, res:Response)=>{
 // login endpoint
 
 export const login = async (req: Request, res: Response) => {
-  const { i, password } = req.body;
-  const username = req.body.username
+  const { username, password } = req.body;
+//   const username = req.body.username
 
   try {
     const user = await prisma.users.findUnique({
-      where: {},
+      where: {username},
     });
 
     if (!user) {
