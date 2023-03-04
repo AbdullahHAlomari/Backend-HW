@@ -12,7 +12,15 @@ import { randomBytes } from 'crypto';
 export const createUser = async(req:Request, res:Response)=>{
     try {
         const {username, password, email, joiningyear, age} = req.body
-    
+
+        const usernameExist = await prisma.users.findUnique({
+            where:{username}
+        })
+        if (usernameExist){
+            return res.status(400).json({Error: "Username is already exist."})
+        }
+
+
         const EmailExist = await prisma.users.findUnique({
             where: {email}
         })
@@ -63,6 +71,8 @@ export const getAllUser = async(req:Request, res:Response)=>{
         console.log(error);        
     }
 }
+
+// get user by id
 export const getUserById = async (req: Request, res: Response) => {
     try {
       const id = req.body.id;
@@ -165,11 +175,12 @@ export const getRoleCount = async(req:Request, res:Response)=>{
 // login endpoint
 
 export const login = async (req: Request, res: Response) => {
-  const { id, password } = req.body;
+  const { i, password } = req.body;
+  const username = req.body.username
 
   try {
     const user = await prisma.users.findUnique({
-      where: { email: id },
+      where: {},
     });
 
     if (!user) {
@@ -188,3 +199,81 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
+
+// Get All users
+export const deleteAllUsers = async(req:Request, res:Response)=>{
+    try {
+    const user = await prisma.users.deleteMany({
+    })
+    res.json(user)
+    } catch (error) {
+        console.log(error);        
+    }
+}
+
+// update passsword 
+// Get All users
+export const updatePassword = async(req:Request, res:Response)=>{
+    try {
+    const {id, password} = req.body
+    const usernameExist = await prisma.users.findUnique({
+        where:{id}
+    })
+    if (!usernameExist) {
+        return res.status(400).json({Err: "User not found"})        
+    }
+
+    const updatePwd = await prisma.users.update({
+        where: {id},
+        data:{
+            password
+        }
+
+    })
+    res.json(updatePwd)
+    } catch (error) {
+        console.log(error);        
+    }
+}
+
+// check the joined year
+export const joinedYear = async(req:Request, res:Response)=>{
+    try {
+        const { id, joiningyear } = req.body;
+    
+        const user = await prisma.users.findUnique({
+          where: { id },
+        });
+    
+        if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+    
+        if (user.joiningyear !== joiningyear) {
+          return res.status(400).json({ error: 'User did not join in the specified year' });
+        }
+    
+        res.json({ message: 'User joined in the specified year' });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Server error' });
+      }
+}
+
+// get all user by joining year
+export const getUserByJoined = async(req:Request, res:Response)=>{
+    try {
+        const {joiningyear} = req.body;
+        const user = await prisma.users.findMany({
+            where:{
+                joiningyear:{
+                    equals: joiningyear
+                }
+            }
+        })
+        res.json(user)
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Server error' });
+      }
+}
