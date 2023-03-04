@@ -1,0 +1,31 @@
+{
+  "name": "usermgmy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.14.6",
+    "prisma": "^4.11.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.11.0",
+    "argon2": "^0.30.3",
+    "bcrypt": "^5.1.0",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.21",
+    "uuid": "^9.0.0",
+    "uuidv4": "^6.2.13",
+    "zod": "^3.21.0"
+  }
+}
