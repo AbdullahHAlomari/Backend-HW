@@ -14,7 +14,7 @@ export const createMovie = async (req: Request, res: Response) => {
         return res.status(400).json({ error: "Movie name is already exist" })
     }
 
-      const user = await prisma.movie.create({
+      const movie = await prisma.movie.create({
         data: {
           name,
           genre,
@@ -22,7 +22,7 @@ export const createMovie = async (req: Request, res: Response) => {
           duration,
         },
       })
-      res.json({ message: 'User created', user })
+      res.json({ message: 'movie created', movie })
       
     } catch (error) {
       console.log(error);     
@@ -68,9 +68,9 @@ export const deleteMovie = async (req:Request, res:Response)=>{
 
 // Get movie by name
 export const getByName = async (req:Request, res:Response)=>{
-  const {genre} = req.body
+  const {name} = req.body
   const movie = await prisma.movie.findMany({
-    where: {genre}
+    where: {name}
   })
   res.json(movie)
 }
