@@ -2,10 +2,6 @@ import {PrismaClient} from '@prisma/client'
 import { error } from 'console';
 const prisma = new PrismaClient();
 import express, {Request,Response} from 'express';
-import {} from 'bcrypt';
-import argon2 from 'argon2'
-import { buffer } from 'stream/consumers';
-import { randomBytes } from 'crypto';
 
 
 
@@ -27,7 +23,6 @@ export const createUser = async(req:Request, res:Response)=>{
         if (EmailExist){
             return res.status(400).json({Error: "Email is already exist."})
         }
-
         if (email == "Ab95@gmail.com"){
             const admin = await prisma.users.create({
                 data:{
