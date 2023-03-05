@@ -8,11 +8,6 @@ import argon2 from 'argon2'
 export const createLoan = async(req:Request, res:Response)=>{
     try {
         const {BookID, userID} = req.body
-        
-        // Log the userID value to the console
-        console.log("userID value:", userID);
-
-        // Check if the userID is valid
         const usercheck = await prisma.user.findUnique({
             where: {
                 id: userID,
@@ -39,8 +34,6 @@ export const createLoan = async(req:Request, res:Response)=>{
 export const getLoan = async(req:Request, res:Response)=>{
     try {
         const {BookID} = req.body
-
-        // Check if the userID is valid
         const bookIdCheck = await prisma.books.findUnique({
             where: {
                 id: BookID,
