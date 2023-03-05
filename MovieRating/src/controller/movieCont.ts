@@ -69,7 +69,7 @@ export const deleteMovie = async (req:Request, res:Response)=>{
 // Get movie by name
 export const getByName = async (req:Request, res:Response)=>{
   const {name} = req.body
-  const movie = await prisma.movie.findMany({
+  const movie = await prisma.movie.findUnique({
     where: {name}
   })
   res.json(movie)
