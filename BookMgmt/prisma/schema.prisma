@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model books {
+  id    String @id @default(uuid())
+  name  String @unique
+  genre String
+}
+
+model loan {
+  id     String @id @default(uuid())
+  userID String
+  BookID String
+
+  @@index([BookID], map: "Loan_BookID_fkey")
+  @@index([userID], map: "Loan_userID_fkey")
+}
+
+model user {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+}
