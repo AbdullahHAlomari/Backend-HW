@@ -50,6 +50,7 @@ export const getLoan = async(req:Request, res:Response)=>{
             return res.status(400).json("Invalid BookID");
         }
         const user = await prisma.loan.findMany({
+            where: {BookID},
             select:{
                 id: true,
                 userID: true
